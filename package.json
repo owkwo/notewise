@@ -1,24 +1,52 @@
 {
-	"name": "obsidian-sample-plugin",
-	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
-	"main": "main.js",
-	"scripts": {
-		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "MIT",
-	"devDependencies": {
-		"@types/node": "^16.11.6",
-		"@typescript-eslint/eslint-plugin": "5.29.0",
-		"@typescript-eslint/parser": "5.29.0",
-		"builtin-modules": "3.3.0",
-		"esbuild": "0.17.3",
-		"obsidian": "latest",
-		"tslib": "2.4.0",
-		"typescript": "4.7.4"
-	}
+    "name": "obsidian-notewise",
+    "version": "0.0.8",
+    "description": "Advanced note management for Obsidian.md, including aliases and links",
+    "main": "main.js",
+    "scripts": {
+        "TODO-1": "// TODO: Do I need all these scripts?",
+        "bump": "node node_modules/bumpp/bin/bumpp",
+        "bundle": "rollup --bundleConfigAsCjs -c rollup.config.js",
+        "package-plugin": "cp -a ./styles.css ./manifest.json ./versions.json ./dist/darlal-switcher-plus",
+        "build": "run-s lint build:fast",
+        "build:fast": "run-s bundle package-plugin",
+        "build:watch": "onchange 'src/**/*.ts' -- npm run build:fast",
+        "ci": "BUILD=production run-s lint test bundle package-plugin",
+        "lint": "eslint '*/**/*.{js,ts}'",
+        "test": "jest",
+        "test:watch": "jest --watchAll",
+        "test:cov": "serve coverage/lcov-report",
+        "dev": "onchange 'src/**/*.ts' -- run-s test lint bundle package-plugin",
+        "version": "node ./version-bump.mjs"
+    },
+    "keywords": [
+        "obsidian",
+        "plugin",
+        "link",
+        "alias"
+    ],
+    "author": "rsenna",
+    "license": "LGPL-3.0-or-later",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^28.0.1",
+        "@rollup/plugin-node-resolve": "^15.3.0",
+        "@rollup/plugin-terser": "^0.4.4",
+        "@rollup/plugin-typescript": "^12.1.1",
+        "@types/jest": "^29.5.14",
+        "@types/node": "^18.19.34",
+        "@typescript-eslint/eslint-plugin": "^7.12.0",
+        "@typescript-eslint/parser": "^7.12.0",
+        "builtin-modules": "3.3.0",
+        "bumpp": "^9.9.2",
+        "esbuild": "0.17.3",
+        "eslint": "^8.56.0",
+        "obsidian": "latest",
+        "ts-essentials": "^10.0.2",
+        "ts-jest": "^29.2.5",
+        "tslib": "^2.6.3",
+        "typescript": "^5.4.5"
+    },
+    "dependencies": {
+        "ts-deepmerge": "^7.0.1"
+    }
 }

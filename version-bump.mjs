@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+'use strict'
+
 import { readFileSync, writeFileSync } from "fs";
 
 const targetVersion = process.env.npm_package_version;

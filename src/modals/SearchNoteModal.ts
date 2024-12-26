@@ -1,5 +1,5 @@
-import {App, FuzzySuggestModal} from "obsidian";
-import {OtherWisePluginSettings} from "../settings";
+import { App, FuzzySuggestModal } from "obsidian";
+import { NoteWisePluginSettings } from "../settings";
 
 export interface SelectorListItem {
   name: string,
@@ -35,9 +35,29 @@ export class SearchNoteModal extends FuzzySuggestModal<SelectorListItem> {
   }
 }
 
-export const searchNoteModal = async (app: App, localSettings: OtherWisePluginSettings, query: string, onSubmit: OnSearchSubmit) => {
+export const obsidianSearch = async (app: App, localSettings: NoteWisePluginSettings, query: string) => {
+
+  // Perform the search
+  (app as any).internalPlugins.plugins['global-search'].instance.openGlobalSearch(query)
+  const searchLeaf = app.workspace.getLeavesOfType('search')[0]
+  const search = await searchLeaf.open(searchLeaf.view)
+  const rawSearchResult = await new Promise(resolve => setTimeout(() => {
+    resolve(search.dom.resultDomLookup)
+  }, 300)) // the delay here was specified in 'obsidian-text-expand' plugin; I assume they had a reason
+
+  const files = Array.from(rawSearchResult.keys())
+
+  console.log(files.map(x => x.path))
+
+}
+
+export const searchNoteModal = async (app: App, localSettings: NoteWisePluginSettings, query: string, onSubmit: OnSearchSubmit) => {
+  // TODO: hard dependency on omnisearch; should fallback to quickswitch if not available
   const omnisearch = await (app as any).plugins.getPlugin('omnisearch');
-  const searchResult = await omnisearch.api.search(query);
+  console.log('query', query);
+  const searchResult = await omnisearch.api.search('');
+  console.log('searchResult', searchResult);
+  console.log('hey');
 
   const selectorListItems: SelectorListItem[] = searchResult
     .map((it: { basename: string, score: number, path: string }) => <SelectorListItem>{
@@ -45,11 +65,46 @@ export const searchNoteModal = async (app: App, localSettings: OtherWisePluginSe
       path: it.path
     });
 
-  const selectorModal = new SearchNoteModal(app, selectorListItems, onSubmit);
+  const searchNoteModal = new SearchNoteModal(app, selectorListItems, onSubmit);
 
   if (!localSettings.basic.alwaysShowSearchModal && selectorListItems.length <= 1) {
-    selectorModal.onChooseItem(selectorListItems[0], undefined);
+    searchNoteModal.onChooseItem(selectorListItems[0], undefined);
   } else {
-    selectorModal.open();
+    searchNoteModal.open();
+  }
+}
+
+export const searchNoteQuickSwitcher = async (app: App, localSettings: NoteWisePluginSettings, query: string, onSubmit: OnSearchSubmit) => {
+  const _app = app as any;
+
+  const quickSwitcher = await _app.internalPlugins.getPluginById('switcher');
+  console.log('quickSwitcher', quickSwitcher);
+
+  if (quickSwitcher) {
+    // Open the Quick Switcher
+    _app.commands.executeCommandById('switcher:open');
+
+    // Wait for the modal to load and set the query
+    setTimeout(() => {
+      const modal = _app.workspace.activeModal;
+      if (modal && modal.inputEl) {
+        modal.inputEl.value = query;
+        modal.inputEl.dispatchEvent(new Event('input')); // Trigger search update
+      }
+    }, 50);
+
+    // Listen for the active leaf change to detect the selected note
+    const listener = _app.workspace.on('active-leaf-change', (leaf: any): void => {
+      if (leaf.view.file) {
+        const result = leaf.view.file.path;
+
+        // Clean up the listener
+        _app.workspace.offref(listener);
+
+        onSubmit(result);
+      }
+    });
+  } else {
+    console.error('Quick Switcher plugin is not enabled.');
   }
 }
