@@ -1,11 +1,11 @@
 {
-  "id": "obsidian-notewise",
-  "name": "NoteWise",
-  "version": "0.0.0",
-  "minAppVersion": "1.4.10",
-  "description": "Advanced note management for Obsidian.md, including aliases and links",
-  "author": "Rogério Senna",
-  "authorUrl": "https://obsidian.md",
-  "fundingUrl": "https://obsidian.md/pricing",
-  "isDesktopOnly": true
+	"id": "obsidian-notewise",
+	"name": "NoteWise",
+	"version": "0.0.9",
+	"minAppVersion": "1.4.10",
+	"description": "Advanced note management for Obsidian.md, including aliases and links",
+	"author": "Rogério Senna",
+	"authorUrl": "https://obsidian.md",
+	"fundingUrl": "https://obsidian.md/pricing",
+	"isDesktopOnly": true
 }

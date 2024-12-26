@@ -1,6 +1,6 @@
 {
     "name": "obsidian-notewise",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "Advanced note management for Obsidian.md, including aliases and links",
     "main": "main.js",
     "scripts": {
@@ -17,7 +17,7 @@
         "test:watch": "jest --watchAll",
         "test:cov": "serve coverage/lcov-report",
         "dev": "onchange 'src/**/*.ts' -- run-s test lint bundle package-plugin",
-        "version": "node ./version-bump.mjs"
+        "version": "node ./version-bump.mjs -c --print-commits --no-push -r"
     },
     "keywords": [
         "obsidian",
