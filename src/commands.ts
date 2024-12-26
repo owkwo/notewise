@@ -1,14 +1,14 @@
-import {App, Editor, MarkdownView} from "obsidian";
-import {GlobalSettings, OtherWisePluginSettings} from "./settings";
-import {EditLinkModal} from "./modals/EditLinkModal";
-import {getAnyLinkUnderCursor, getSelection, getWordUnderCursor, Link, LinkType, MaybeEditorToken} from "./link";
-import {searchNoteModal} from "./modals/SearchNoteModal";
+import { App, Editor, MarkdownView } from "obsidian";
+import { GlobalSettings, NoteWisePluginSettings } from "./settings";
+import { EditLinkModal } from "./modals/EditLinkModal";
+import { getAnyLinkUnderCursor, getSelection, getWordUnderCursor, Link, LinkType, MaybeEditorToken } from "./link";
+import { searchNoteModal, searchNoteQuickSwitcher } from "./modals/SearchNoteModal";
 
 export const makeLink = async (
   app: App,
   editor: Editor,
   globalSettings: () => GlobalSettings,
-  localSettings: OtherWisePluginSettings,
+  localSettings: NoteWisePluginSettings,
   checking: boolean
 ) => {
   const globalLinkType: LinkType = globalSettings().useMarkdownLinks ? 'markdown' : 'wikilink'
@@ -26,7 +26,8 @@ export const makeLink = async (
     const link = new Link(token.text, globalLinkType)
     link.linkType = globalLinkType; // replace link type
 
-    searchNoteModal(app, localSettings, link.address, result => {
+    // searchNoteModal(app, localSettings, link.address, result => {
+    searchNoteQuickSwitcher(app, localSettings, link.address, result => {
       if (result) {
         link.address = result;
       }
@@ -43,7 +44,7 @@ export const editLink = (
   app: App,
   editor: Editor,
   view: MarkdownView,
-  localSettings: OtherWisePluginSettings,
+  localSettings: NoteWisePluginSettings,
   checking: boolean
 ) => {
   const result = true;
@@ -52,7 +53,7 @@ export const editLink = (
     return result;
   }
 
-  const editLinkModal = new EditLinkModal(app, editor, () => {});
+  const editLinkModal = new EditLinkModal(app, editor, () => { });
   editLinkModal.open();
 
   return result;

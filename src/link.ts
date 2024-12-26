@@ -1,4 +1,4 @@
-import {Editor, EditorPosition, EditorRange} from "obsidian";
+import { Editor, EditorPosition, EditorRange } from "obsidian";
 
 export type LinkType = 'wikilink' | 'markdown';
 export const WIKILINK_REGEX = /\[\[(?<address>[^\]|]+)(?:\|(?<alias>[^\]|]*))?\]\]/gu;
@@ -21,12 +21,16 @@ export class Link {
   constructor(text: string, defaultLinkType: LinkType) {
     const setLink = (regex: RegExp, linkType: LinkType) => {
       regex.lastIndex = 0
+      console.log('text', text)
 
       try {
         const regexResult: any = regex.exec(text)
 
         const alias = regexResult.groups['alias']
         const address = regexResult.groups['address']
+
+        console.log('alias', alias)
+        console.log('address', address)
 
         this._linkType = linkType;
         this._alias = alias && alias != address ? alias : ''

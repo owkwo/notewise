@@ -3,15 +3,15 @@ import {
   DEFAULT_SETTINGS,
   GlobalSettings,
   HasSettings,
-  OtherWisePluginSettings,
-  OtherWiseSettingTab
+  NoteWisePluginSettings,
+  NoteWiseSettingTab
 } from "./settings";
 import {makeLink, editLink} from "./commands";
 
 // REMEMBER to run during development: npm run dev
 
-export default class OtherWisePlugin extends Plugin implements HasSettings {
-  localSettings: OtherWisePluginSettings;
+export default class NoteWisePlugin extends Plugin implements HasSettings {
+  localSettings: NoteWisePluginSettings;
 
   onload = async () => {
     await this.loadLocalSettings();
@@ -30,7 +30,7 @@ export default class OtherWisePlugin extends Plugin implements HasSettings {
     statusBarItemEl.setText('Status Bar Text');
 
     this.addCommand({
-      id: 'otherwise-make-link',
+      id: 'notewise-make-link',
       name: 'Make link: Turn selection / word at cursor into a link, or edit link at cursor',
       // @ts-ignore
       editorCheckCallback: async (checking: boolean, editor: Editor, view: MarkdownView) =>
@@ -38,14 +38,21 @@ export default class OtherWisePlugin extends Plugin implements HasSettings {
     });
 
     this.addCommand({
-      id: 'otherwise-edit-link',
+      id: 'notewise-edit-link',
+      name: 'Edit link modal',
+      editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) =>
+        editLink(this.app, editor, view, this.localSettings, checking)
+    });
+
+    this.addCommand({
+      id: 'notewise-dwim',
       name: 'Edit link modal',
       editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView) =>
         editLink(this.app, editor, view, this.localSettings, checking)
     });
 
     // This adds a settings tab so the user can configure various aspects of the plugin
-    this.addSettingTab(new OtherWiseSettingTab(this.app, this));
+    this.addSettingTab(new NoteWiseSettingTab(this.app, this));
 
     // If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
     // Using this function will automatically remove the event listener when this plugin is disabled.
@@ -70,7 +77,7 @@ export default class OtherWisePlugin extends Plugin implements HasSettings {
     }
   }
 
-   loadLocalSettings = async (): Promise<OtherWisePluginSettings> => {
+   loadLocalSettings = async (): Promise<NoteWisePluginSettings> => {
     return this.localSettings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData())
   }
 

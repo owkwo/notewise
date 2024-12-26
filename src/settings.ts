@@ -1,16 +1,16 @@
-import OtherWisePlugin from 'src/main';
+import NoteWisePlugin from 'src/main';
 
 import {PluginSettingTab, App, Setting} from "obsidian";
 export interface GlobalSettings {
   useMarkdownLinks: boolean
 }
-export interface OtherWisePluginSettings {
+export interface NoteWisePluginSettings {
   basic: {
     fuzzySearch: boolean,
     alwaysShowSearchModal: boolean
   }
 }
-export const DEFAULT_SETTINGS: OtherWisePluginSettings = {
+export const DEFAULT_SETTINGS: NoteWisePluginSettings = {
   basic: {
     fuzzySearch: true,
     alwaysShowSearchModal: false
@@ -18,12 +18,12 @@ export const DEFAULT_SETTINGS: OtherWisePluginSettings = {
 };
 export interface HasSettings {
   getGlobalSettings(): GlobalSettings
-  loadLocalSettings(): Promise<OtherWisePluginSettings>
+  loadLocalSettings(): Promise<NoteWisePluginSettings>
   saveLocalSettings(): Promise<void>
 }
-export class OtherWiseSettingTab extends PluginSettingTab {
-  plugin: OtherWisePlugin;
-  constructor(app: App, plugin: OtherWisePlugin) {
+export class NoteWiseSettingTab extends PluginSettingTab {
+  plugin: NoteWisePlugin;
+  constructor(app: App, plugin: NoteWisePlugin) {
     super(app, plugin);
     this.plugin = plugin;
   }
@@ -37,7 +37,7 @@ export class OtherWiseSettingTab extends PluginSettingTab {
       header.ariaLabel = desc ?? null
     };
 
-    createHeader('OtherWise', 'Required OtherWise settings');
+    createHeader('NoteWise', 'Required NoteWise settings');
 
     new Setting(containerEl)
       .setName('Fuzzy Search')

@@ -1,11 +1,11 @@
 {
-  "id": "obsidian-otherwise",
-  "name": "OtherWise",
-  "version": "0.0.5",
-  "minAppVersion": "1.4.10",
-  "description": "OtherWise manages aliases across your vault.",
-  "author": "Rogério Senna",
-  "authorUrl": "https://obsidian.md",
-  "fundingUrl": "https://obsidian.md/pricing",
-  "isDesktopOnly": false
+	"id": "obsidian-notewise",
+	"name": "NoteWise",
+	"version": "0.0.7",
+	"minAppVersion": "1.4.10",
+	"description": "Advanced note management for Obsidian.md, including aliases and links",
+	"author": "Rogério Senna",
+	"authorUrl": "https://obsidian.md",
+	"fundingUrl": "https://obsidian.md/pricing",
+	"isDesktopOnly": true
 }

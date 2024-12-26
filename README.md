@@ -11,7 +11,7 @@ updated: 2024-03-09T22:13:32+01:00
 > [!danger] Note to myself: README.md IS A HARD LINK TO AN OBSIDIAN NOTE!
 ## Description
 
-OtherWise: Aliases and links
+NoteWise: Aliases and links
 
 ## Current Goal
 
@@ -35,7 +35,7 @@ OtherWise: Aliases and links
     - [x] Same for selection (multiple/partial words) ✅ 2024-03-09
         - [x] Condition: Cannot have line breaks ✅ 2024-03-09
     - [x] Use [[OmniSearch]] if it's available ✅ 2024-03-09
-        - [ ] Use default search otherwise
+        - [ ] Use default search notewise
         - [ ] Fuzzy search with setting
             - 2024-03-09: currently fuzzy search is always enabled; setting is already available
     - [ ] Add setting to show _Edit link_ dialog before applying changes
@@ -62,7 +62,7 @@ OtherWise: Aliases and links
     - [ ] Consider creating Alias Notes as a different file type (not .md)
         - That could make it easier to implement the redirect
         - See [MeepTech/obsidian-custom-file-extensions-plugin](https://github.com/MeepTech/obsidian-custom-file-extensions-plugin)
-    - [ ] Check impact on other OtherWise proposed features
+    - [ ] Check impact on other NoteWise proposed features
         - Something similar could be used to *[[#^cache|cache]]* external links! But then they would have content
 - [ ] Batch update links with alias
     - [ ] From a note A, user can choose which alias should be used for A, in each note referencing A
@@ -70,7 +70,7 @@ OtherWise: Aliases and links
     - [ ] Also choose a different alias for each link
 - [ ] Default alias
     - [ ] Mark one alias as the default on Note A, which will be used whenever a link is created to Note A
-        - Might be limited only to OtherWise commands
+        - Might be limited only to NoteWise commands
 - [ ] Archive external link(s)
     - See legacy plugin [GitHub - tomzorz/obsidian-link-archive: Link Archive plugin for Obsidian](https://github.com/tomzorz/obsidian-link-archive)
     - [ ] Add commands to
@@ -84,7 +84,7 @@ OtherWise: Aliases and links
     - Can be used WITH or WITHOUT vim bindings
     - Should support everything that vim surround does, including removing surrounds
     - Be aware of Obsidian peculiarities, specially the wiki-link format
-    - [!] 2024-03-01T10:25:54+01:00 I don't think this has much to do with [[OtherWise]] though... Should be in a separate plugin
+    - [!] 2024-03-01T10:25:54+01:00 I don't think this has much to do with [[NoteWise]] though... Should be in a separate plugin
 
 ## Similar Plugins
 
