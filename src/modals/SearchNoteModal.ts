@@ -1,5 +1,7 @@
 import { App, FuzzySuggestModal } from "obsidian";
-import { NoteWisePluginSettings } from "../settings";
+
+
+import {NotewisePluginSettings} from "../settings/notewise-plugin-settings";
 
 export interface SelectorListItem {
   name: string,
@@ -35,7 +37,7 @@ export class SearchNoteModal extends FuzzySuggestModal<SelectorListItem> {
   }
 }
 
-export const obsidianSearch = async (app: App, localSettings: NoteWisePluginSettings, query: string) => {
+export const obsidianSearch = async (app: App, localSettings: NotewisePluginSettings, query: string) => {
 
   // Perform the search
   (app as any).internalPlugins.plugins['global-search'].instance.openGlobalSearch(query)
@@ -51,9 +53,9 @@ export const obsidianSearch = async (app: App, localSettings: NoteWisePluginSett
 
 }
 
-export const searchNoteModal = async (app: App, localSettings: NoteWisePluginSettings, query: string, onSubmit: OnSearchSubmit) => {
+export const searchNoteModal = async (app: App, localSettings: NotewisePluginSettings, query: string, onSubmit: OnSearchSubmit) => {
   // TODO: hard dependency on omnisearch; should fallback to quickswitch if not available
-  const omnisearch = await (app as any).plugins.getPlugin('omnisearch');
+  const omnisearch = await (app as any).plugins.api('omnisearch');
   console.log('query', query);
   const searchResult = await omnisearch.api.search('');
   console.log('searchResult', searchResult);
@@ -74,7 +76,7 @@ export const searchNoteModal = async (app: App, localSettings: NoteWisePluginSet
   }
 }
 
-export const searchNoteQuickSwitcher = async (app: App, localSettings: NoteWisePluginSettings, query: string, onSubmit: OnSearchSubmit) => {
+export const searchNoteQuickSwitcher = async (app: App, localSettings: NotewisePluginSettings, query: string, onSubmit: OnSearchSubmit) => {
   const _app = app as any;
 
   const quickSwitcher = await _app.internalPlugins.getPluginById('switcher');
